@@ -10,9 +10,24 @@ import Home from './Components/Home/Home';
 import Login from './Components/Login/Login';
 import Tamim from './Components/Tamim/Tamim';
 import Book from './Components/Book/Book';
+import { createContext } from 'react';
+import { useState } from 'react';
+import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
+
+export const UserContext = createContext();
 
 function App() {
+  const [loggedInUser, setLoggedInUser] = useState({
+    email: '',
+    name: '',
+    error: '',
+    success: false,
+    isActive: false,
+    password: ''
+  });
   return (
+    <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>
+      {loggedInUser.success && <p>Name: {loggedInUser.name}</p>}
     <Router>
       <Header></Header>
       <Switch>
@@ -25,14 +40,15 @@ function App() {
         <Route path="/tamim">
           <Tamim></Tamim>
         </Route>
-        <Route path="/book/:bedType">
+        <PrivateRoute path="/book/:bedType">
           <Book></Book>
-        </Route>
+        </PrivateRoute>
         <Route exact path="/">
           <Home></Home>
         </Route>
       </Switch>
     </Router>
+    </UserContext.Provider>
   );
 }
 

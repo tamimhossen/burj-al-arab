@@ -22,7 +22,7 @@ import { useHistory } from 'react-router';
 //   }));
 
 const Room = ({room}) => {
-    console.log(room)
+    // console.log(room);;
 
     const history = useHistory();
     const handleBook = (bedType) => {
